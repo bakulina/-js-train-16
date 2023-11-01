@@ -8,8 +8,15 @@
 function filterStudentsByGrade(students, grade) {
   // Виведемо в консоль критичну помилку з текстом "Якщо ви бачите це повідомлення, то завдання 1 виконано не правильно"
   // Очищення консолі перед виведенням
+  console.log(`Завдання: 1 ==============================`);
   // Виведемо в консоль повідомлення для відстеження роботи програми з текстом: "Завдання: 1 =============================="
   // Відфільтруємо тільки тих студентів оцінка яких співпадає з grade
+  const filteredStudents = students.filter(
+    (student) => student.grade === grade
+  );
+  filteredStudents.forEach((student) => {
+    console.log(`Ім'я: ${student.name}, Оцінка: ${student.grade}`);
+  });
   // За допомогою перебору масиву виведемо повідомлення для відстеження роботи програми з іменем кожного студента, який має необхідну оцінку
 }
 
@@ -32,9 +39,16 @@ filterStudentsByGrade(
  *  arr - Масив для обробки.
  */
 function logArrayElements(arr) {
+  if (!Array.isArray(arr)) {
+    console.log("Аргумент має бути масивом!");
+    return null;
+  }
   // Перевіряємо, чи arr є масивом.
   // Якщо arr не є масивом, виведеме в консоль критичну помилоку з текстом "Аргумент має бути масивом!"
   // Повертаємо null, що свідчить про неможливість обробки вхідних даних.
+  for (let i = 0; i < arr.length; i++) {
+    console.log(`елемент ${i}:${arr[i]}`);
+  }
   // Перебираємо кожен елемент масиву.
   // Виводимо в консоль поточний елемент масиву та його індекс в форматі Елемент <індекс>: <значення>
 }
@@ -58,6 +72,17 @@ logArrayElements([1, 2, 3, "a", "b", "c"]);
  *  maxLength - Максимальна довжина масиву.
  */
 function warnAboutMaxArrayLength(arr, maxLength) {
+  if (!Array.isArray(arr) || typeof maxLength !== "number") {
+    console.log(
+      "Перший аргумент має бути масивом, другий аргумент має бути числом!"
+    );
+    return null;
+  }
+  if (arr.length > maxLength) {
+    console.log("Увага! Довжина масиву перевищує максимально допустиму!");
+  } else {
+    console.log("Довжина масиву не перевищує максимально допустиму.");
+  }
   // Перевіряємо, чи arr є масивом, а maxLength є числом.
   // Якщо arr не є масивом або maxLength не є числом, виведеме в консоль критичну помилоку з текстом: "Перший аргумент має бути масивом, другий аргумент має бути числом!".
   // Повертаємо null, що свідчить про неможливість обробки вхідних даних.
@@ -81,8 +106,13 @@ warnAboutMaxArrayLength([1, 2, 3, 4, 5], 3);
  */
 function compareArrays(arr1, arr2) {
   // Сортуємо масиви за зростанням.
+  arr1.sort((a, b) => a - b);
+  arr2.sort((a, b) => a - b);
+  const jsonArr1 = JSON.stringify(arr1);
+  const jsonArr2 = JSON.stringify(arr2);
   // Оскільки напряму порівняти масиви за допомогою оператора === не можно, перетворимо ії в json і порівняємо
   // Використовуємо `console.assert()`, щоб вивести помилку, якщо масиви не однакові.
+  console.assert(jsonArr1 === jsonArr2, "Масиви не однакові!");
 }
 
 console.log("Завдання: 4 ==============================");
@@ -99,8 +129,21 @@ compareArrays([1, 2, 3, 4, 5], [1, 2, 3, 4]);
  */
 function buildMatrix(size) {
   // Перевіряємо, чи size є числом.
-  // Якщо size не є числом, виведеме в консоль критичну помилку з текстом "Аргумент має бути числом!".
+  if (typeof size !== "number" || size < 1) {
+    console.log("Масиви не однакові!");
+    return null;
+  }
+  // Якщо size не є числом, виведеме в консоль критичну помилку з текстом"Масиви не однакові!"
   // Повертаємо null, що свідчить про неможливість обробки вхідних даних.
+  const matrix = [];
+  for (let i = 0; i < size; i++) {
+    const row = [];
+    for (let j = 0; j < size; j++) {
+      const randomNum = Math.floor(Math.random() * 10);
+      row.push(randomNum);
+    }
+    matrix.push(row);
+  }
   // Створюємо порожній масив який буде нашою матрицею.
   // Цикл для заповнення рядків матриці, лічильник і має бути від 0 до розміру матриці.
   // Створюємо порожній масив, який буде рядком матриці.
@@ -108,6 +151,11 @@ function buildMatrix(size) {
   // Генеруємо випадкове число від 0 до 9 округляємо його до меншого цілого, і додаємо його до рядка.
   // Додаємо рядок до матриці.
   // Виводимо матрицю в консоль за допомогою як таблицю.
+  for (let i = 0; i < size; i++) {
+    console.log(matrix[i].join("\t"));
+  }
+  return matrix;
+
   // Повертаємо створену матрицю.
 }
 
@@ -124,7 +172,13 @@ buildMatrix(5);
  */
 function traceBackward(n) {
   // Виводимо поточне число n.
+  console.log(n);
   // Якщо n є більше 1, викликаємо функцію traceBackward знову з аргументом n - 1.
+  if (n > 1) {
+    traceBackward(n - 1);
+  } else {
+    console.log("Розгорнута стек викликів завершена.");
+  }
   // Виведемо стек викликів, коли досягнемо 1.
 }
 
@@ -139,6 +193,11 @@ traceBackward(5);
  */
 function displayGroupedInfo(students) {
   // Переберомо об'єкт за допомого for of
+  for (const student of students) {
+    console.log(`Студент: ${student.name}`);
+    console.log(`Вік: ${student.age}`);
+    console.log(`Предмет: ${student.subject}`);
+  }
   // Створимо групу з повідомленням `Студент: ${student.name}`
   // Виведемо корисне повідомлення з текстом `Вік: ${student.age}`
   // Виведемо корисне повідомлення з текстом `Предмет: ${student.subject}`
@@ -171,6 +230,17 @@ displayGroupedInfo([
  */
 function validateUserInput(userInput) {
   // Перевіремо умову наявності імені користувача, якщо воно відсутнє виводимо "Помилка: ім'я користувача відсутнє!"
+  if (!userInput.username) {
+    console.warn("Помилка: ім'я користувача відсутнє!");
+  }
+  if (!userInput.password) {
+    console.warn("Помилка: пароль відсутній!");
+  } else {
+    console.assert(
+      userInput.password.length > 8,
+      "Попередження: пароль має бути довшим за 8 символів!"
+    );
+  }
   // Перевіремо умову наявності паролю, якщо він відсутній виводимо "Помилка: пароль відсутній!"
   // Перевірка довжини паролю чи менше вона ніж 8,якщо ні виводимо повідомлення про потенційну проблему з текстом "Попередження: пароль має бути довшим за 8 символів!"
 }
@@ -188,10 +258,17 @@ validateUserInput({ username: "alex", password: "pass" });
  */
 function calculateTotalPrice(products) {
   // Початок вимірювання часу
+  console.time(calculateTotalPrice);
+  let total = 0;
   // Створення змінної total яка буде нашою загальную ціною, початкове значення нуль
   // Перебираємо кожен об'єкт товару та додаємо ціну товару до загальної вартості
+  for (const product of products) {
+    total += product.price;
+  }
+  console.log(`Загальна вартість товарів: ${total}`);
   // Виведення загальної вартості товарів у форматі "Загальна вартість товарів:", total
   // Зупинка вимірювання та виведення часу
+  console.timeEnd(calculateTotalPrice);
 }
 
 console.log("Завдання: 9 ==============================");
@@ -213,7 +290,21 @@ calculateTotalPrice(products);
  *  word - слово, для якого потрібно порахувати кількість літер.
  */
 function countVowelsAndConsonants(word) {
+  const vowels = "aeiou";
+  let vowelCount = 0;
+  let consonantCount = 0;
+
+  for (const letter of word) {
+    const lowercaseLetter = letter.toLowerCase();
+    if (vowels.includes(lowercaseLetter)) {
+      vowelCount++;
+    } else if (lowercaseLetter >= "a" && lowercaseLetter <= "z") {
+      consonantCount++;
+    }
+  }
   // Створюємо рядок де будуть всі голосні "aeiou"
+  console.log(`Кількість голосних: ${vowelCount}`);
+  console.log(`Кількість приголосних: ${consonantCount}`);
   // Перебираємо кожну літеру у слові за допомогою for of
   // Перетворюємо літеру на малу літеру для порівняння
   // Перевіряємо, чи є літера в нашому рядку з голосними, якщо так, то виводимио лічильник голосних, інакше приголосних
